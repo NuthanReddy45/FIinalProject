@@ -66,7 +66,6 @@ const connectdb= async ()=>{
         console.log('mongo connected scf');
     }catch(err){
         console.log("unable to connect to mongo db ",err);
-        // process.exit(1);
     }
 
 }

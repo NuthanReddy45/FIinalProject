@@ -9,7 +9,7 @@ const { check, validationResult } = require('express-validator');
 const checkObjectId = require('../../middleware/checkObjectId');
 
 const Profile = require('../../models/Profile');
-const User = require('../../models/user');
+const User = require('../../models/User');
 const Post = require('../../models/Post');
 
 // @route    GET api/profile/me

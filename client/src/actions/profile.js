@@ -93,7 +93,8 @@ export const getGithubRepos = (username) => async (dispatch) => {
     });
   } catch (err) {
     dispatch({
-      type: NO_REPOS
+      type: NO_REPOS,
+      payload:{msg: err.response.statusText, status: err.response.status}
     });
   }
 };

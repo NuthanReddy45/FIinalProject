@@ -1,8 +1,8 @@
 {
     "mongoURI":"mongodb+srv://NuthanReddy:snReddy213@devcluster.v4jkw.mongodb.net/devdb?retryWrites=true&w=majority",
   
-    "jwtSecret":"Token",
-    "githubToken":"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"
+    "jwtSecret":"Token"
+    
 } 
 
  

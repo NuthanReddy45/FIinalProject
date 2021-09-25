@@ -286,6 +286,8 @@ router.get('/github/:username', async (req, res) => {
       Authorization: `token ${config.get('githubToken')}`
     };
 
+    // console.log('config =',config.get('githubToken'));
+
     const gitHubResponse = await axios.get(uri, { headers });
     return res.json(gitHubResponse.data);
   } catch (err) {

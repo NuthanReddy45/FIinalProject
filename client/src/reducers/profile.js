@@ -48,14 +48,17 @@ function profileReducer(state = initialState, action) {
         repos: []
       };
     case GET_REPOS:
+      
       return {
         ...state,
         repos: payload,
         loading: false
       };
     case NO_REPOS:
+      console.log("error in repo : ",payload);
       return {
         ...state,
+        error:payload,
         repos: []
       };
     default:

@@ -279,14 +279,14 @@ router.delete('/education/:edu_id', auth, async (req, res) => {
 router.get('/github/:username', async (req, res) => {
   try {
 
-    // const tok='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';
-    const tok1=process.env.GIT_TOKEN;
+    const tok='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';
+    // const tok=process.env.GIT_TOKEN;
     const uri = encodeURI(
       `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc`
     );
     const headers = {
       'user-agent': 'node.js',
-      Authorization: `token ${tok1}`
+      Authorization: `token ${tok}`
     };
 
     // console.log('config =',config.get('githubToken'));

@@ -71,6 +71,4 @@ const connectdb= async ()=>{
 }
 
 
-// module.exports = fun;
-// module.exports = run;
 module.exports = connectdb;

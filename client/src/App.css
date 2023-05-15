@@ -1,3 +1,180 @@
+
+
+
+
+/* faqs.css */
+.accordion {
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 50px;
+}
+
+.accordion-item {
+  border: 1px solid #ddd;
+  border-top: none;
+  margin-bottom: 10px;
+}
+
+.accordion-item-header {
+  background-color: #f5f5f5;
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.accordion-item-body {
+  overflow: hidden;
+  transition: height 0.3s ease-in-out;
+  height: 0;
+}
+
+.accordion-item-body.is-open {
+  height: auto;
+}
+
+.accordion-item-body-content {
+  padding: 10px;
+}
+
+
+/* /////
+
+// */
+
+.ActsMain {
+  display: flex;
+}
+
+
+.card {
+  max-width: 345px;
+  border: 1px dotted #37903d;
+  border-radius: 5px;
+  padding: 3px;
+  margin: 3px;
+  overflow: hidden;
+}
+
+.card-image {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+.card-title {
+  margin: 0 0 16px;
+}
+
+.card-text {
+  margin: 0;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.card-button {
+  padding: 8px 16px;
+  background-color: #f00;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+
+
+
+
+
+
+
+
+.shopping-cart {
+  border: 2px solid #ccc;
+  padding: 20px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cart-item img {
+  width: 100px;
+  margin-right: 20px;
+}
+
+.item-details h3 {
+  margin-top: 0;
+}
+
+.item-details button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+
+
+.act {
+  border: 2px solid #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.act h2 {
+  margin-top: 0;
+}
+
+.act p {
+  margin-bottom: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 :root {
     --primary-color: #17a2b8;
     --dark-color: #343a40;
@@ -304,7 +481,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.7rem 2rem;
-    position: fixed;
+    /* position: fixed; */
     z-index: 1;
     width: 100%;
     top: 0;
@@ -333,7 +510,7 @@
   /* Landing Page */
   .landing {
     position: relative;
-    background: url('./img/showcase.jpg') no-repeat center center/cover;
+    background: url('./components/pages/img/itr.webp') no-repeat center center/cover;
     height: 100vh;
   }
   
@@ -574,4 +751,37 @@
     .post button {
       padding: 0.3rem 0.4rem;
     }
+  }
+
+  .card-container {
+    display: flex;
+    gap: 4px;
+  }
+
+  .item-container {
+    margin: 6px 0;
+    border: 1px solid rgba(0,0,0,0.5);
+    width: 100%;
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+
+  .items {
+    list-style: none;
+    padding: 0;
+  }
+
+  .row-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .row-container div {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .form-container {
+    margin: 10px auto;
   }

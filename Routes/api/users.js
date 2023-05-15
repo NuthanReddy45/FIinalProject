@@ -1,24 +1,29 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const gravatar = require('gravatar');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const config = require('config');
-const { check, validationResult } = require('express-validator');
+const gravatar = require("gravatar");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const config = require("config");
+const { check, validationResult } = require("express-validator");
 // const normalize = require('normalize-url');
 
-const User = require('../../models/user');
+const User = require("../../models/user");
+const {
+  createEmailVerificationToken,
+  createEmailVerificationUrl,
+} = require("../../config/email");
 
 // @route    POST api/users
 // @desc     Register user
 // @access   Public
 router.post(
-  '/',
-  check('name', 'Name is required').notEmpty(),
-  check('email', 'Please include a valid email').isEmail(),
+  "/",
+  check("name", "Name is required").notEmpty(),
+  check("email", "Please include a valid email").isEmail(),
+  check("phnNo", "Please include a valid Phn No.").isMobilePhone(),
   check(
-    'password',
-    'Please enter a password with 6 or more characters'
+    "password",
+    "Please enter a password with 6 or more characters"
   ).isLength({ min: 6 }),
   async (req, res) => {
     const errors = validationResult(req);
@@ -26,9 +31,9 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password } = req.body;
+    const { name, email, phnNo, password } = req.body;
 
-    console.log("user deteails = ",name,email);
+    console.log("user deteails = ", name, email);
 
     try {
       let user = await User.findOne({ email });
@@ -36,7 +41,7 @@ router.post(
       if (user) {
         return res
           .status(400)
-          .json({ errors: [{ msg: 'User already exists' }] });
+          .json({ errors: [{ msg: "User already exists" }] });
       }
 
       // const avatar = normalize(
@@ -48,37 +53,51 @@ router.post(
       //   { forceHttps: true }
       // );
 
-      const avatar=gravatar.url(email, {
-            s: '200',
-            r: 'pg',
-            d: 'mm'
-          });
+      const avatar = gravatar.url(email, {
+        s: "200",
+        r: "pg",
+        d: "mm",
+      });
 
-          console.log("avatar= ",avatar);
-   
-       dev = new User({
+      console.log("avatar= ", avatar);
+
+      dev = new User({
         name,
         email,
         password,
-        avatar 
+        phnNo,
+        avatar,
       });
 
       const salt = await bcrypt.genSalt(10);
 
       dev.password = await bcrypt.hash(password, salt);
 
-      await dev.save();
+      const saved = await dev.save();
 
       const payload = {
         user: {
-          id: dev.id
-        }
+          id: dev.id,
+        },
       };
+
+      const token = createEmailVerificationToken(dev);
+      const url = createEmailVerificationUrl(dev._id, token);
+      const mailOptions = emailVerificationTemplate(saved, url);
+      transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+          console.log(err, info);
+          return res.status(500).json({
+            message: "Error sending email! 😢",
+            type: "error",
+          });
+        }
+      });
 
       jwt.sign(
         payload,
-        config.get('jwtSecret'),
-        { expiresIn: '5 days' },
+        config.get("jwtSecret"),
+        { expiresIn: "5 days" },
         (err, token) => {
           if (err) throw err;
           res.json({ token });
@@ -86,7 +105,7 @@ router.post(
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server error');
+      res.status(500).send("Server error");
     }
   }
 );

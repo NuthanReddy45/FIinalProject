@@ -1,35 +1,32 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { createProfile, getCurrentProfile } from '../../actions/profile';
+import React, { Fragment, useState, useEffect } from "react";
+import { Link, useRouteMatch } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { createProfile, getCurrentProfile } from "../../actions/profile";
 
 const initialState = {
-  company: '',
-  website: '',
-  location: '',
-  status: '',
-  skills: '',
-  githubusername: '',
-  bio: '',
-  twitter: '',
-  facebook: '',
-  linkedin: '',
-  youtube: '',
-  instagram: ''
+  bussiness: "",
+  location: "",
+  aadharNo: "",
+  factName: "",
+  act1: "",
+  act2: "",
+  act3: "",
+  act4: "",
+  panNo: "",
+  regID: "",
+  bio: "",
 };
 
 const ProfileForm = ({
   profile: { profile, loading },
   createProfile,
   getCurrentProfile,
-  history
+  history,
 }) => {
   const [formData, setFormData] = useState(initialState);
 
-  const creatingProfile = useRouteMatch('/create-profile');
-
-  const [displaySocialInputs, toggleSocialInputs] = useState(false);
+  const creatingProfile = useRouteMatch("/create-profile");
 
   useEffect(() => {
     if (!profile) getCurrentProfile();
@@ -41,25 +38,23 @@ const ProfileForm = ({
       for (const key in profile.social) {
         if (key in profileData) profileData[key] = profile.social[key];
       }
-      if (Array.isArray(profileData.skills))
-        profileData.skills = profileData.skills.join(', ');
+
       setFormData(profileData);
     }
   }, [loading, getCurrentProfile, profile]);
 
   const {
-    company,
-    website,
+    bussiness,
+    factName,
     location,
-    status,
-    skills,
-    githubusername,
+    aadharNo,
+    panNo,
+    act1,
+    act2,
+    act3,
+    act4,
+    regID,
     bio,
-    twitter,
-    facebook,
-    linkedin,
-    youtube,
-    instagram
   } = formData;
 
   const onChange = (e) =>
@@ -73,55 +68,49 @@ const ProfileForm = ({
   return (
     <Fragment>
       <h1 className="large text-primary">
-        {creatingProfile ? 'Create Your Profile' : 'Edit Your Profile'}
+        {creatingProfile ? "Create Your Profile" : "Edit Your Profile"}
       </h1>
       <p className="lead">
         <i className="fas fa-user" />
         {creatingProfile
           ? ` Let's get some information to make your`
-          : ' Add some changes to your profile'}
+          : " Add some changes to your profile"}
       </p>
       <small>* = required field</small>
       <form className="form" onSubmit={onSubmit}>
         <div className="form-group">
-          <select name="status" value={status} onChange={onChange}>
-            <option>* Select Professional Status</option>
-            <option value="Developer">Developer</option>
-            <option value="Junior Developer">Junior Developer</option>
-            <option value="Senior Developer">Senior Developer</option>
+          <select name="bussiness" value={bussiness} onChange={onChange}>
+            <option>* Select bussiness type</option>
+            <option value="Developer">Factory Owner</option>
+            <option value="Junior Developer">Contractor</option>
+            <option value="Senior Developer">Industrialist</option>
             <option value="Manager">Manager</option>
-            <option value="Student or Learning">Student or Learning</option>
-            <option value="Instructor">Instructor or Teacher</option>
-            <option value="Intern">Intern</option>
             <option value="Other">Other</option>
           </select>
           <small className="form-text">
-            Give us an idea of where you are at in your career
+            Please select type of your bussiness
           </small>
         </div>
         <div className="form-group">
           <input
             type="text"
-            placeholder="Company"
-            name="company"
-            value={company}
+            placeholder="factName"
+            name="factName"
+            value={factName}
             onChange={onChange}
           />
           <small className="form-text">
-            Could be your own company or one you work for
+            Please provide name of the organization
           </small>
         </div>
         <div className="form-group">
           <input
             type="text"
-            placeholder="Website"
-            name="website"
-            value={website}
+            placeholder="aadharNo"
+            name="aadharNo"
+            value={aadharNo}
             onChange={onChange}
           />
-          <small className="form-text">
-            Could be your own or a company website
-          </small>
         </div>
         <div className="form-group">
           <input
@@ -132,113 +121,75 @@ const ProfileForm = ({
             onChange={onChange}
           />
           <small className="form-text">
-            City & state suggested (eg. Boston, MA)
+            City & state suggested (eg. Noida, UP)
           </small>
         </div>
         <div className="form-group">
           <input
             type="text"
-            placeholder="* Skills"
-            name="skills"
-            value={skills}
+            placeholder="PAN Card No."
+            name="panNo"
+            value={panNo}
             onChange={onChange}
           />
-          <small className="form-text">
-            Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
-          </small>
         </div>
         <div className="form-group">
           <input
             type="text"
-            placeholder="Github Username"
-            name="githubusername"
-            value={githubusername}
+            placeholder="act1"
+            name="act1"
+            value={act1}
             onChange={onChange}
           />
-          <small className="form-text">
-            If you want your latest repos and a Github link, include your
-            username
-          </small>
         </div>
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="act2"
+            name="act2"
+            value={act2}
+            onChange={onChange}
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="act3"
+            name="act3"
+            value={act3}
+            onChange={onChange}
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="act4"
+            name="act4"
+            value={act4}
+            onChange={onChange}
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="RegID"
+            name="regID"
+            value={regID}
+            onChange={onChange}
+          />
+        </div>
+
         <div className="form-group">
           <textarea
-            placeholder="A short bio of yourself"
+            placeholder="A short bio of your organization"
             name="bio"
             value={bio}
             onChange={onChange}
           />
-          <small className="form-text">Tell us a little about yourself</small>
+          <small className="form-text">
+            Tell us a little about your organization
+          </small>
         </div>
-
-        <div className="my-2">
-          <button
-            onClick={() => toggleSocialInputs(!displaySocialInputs)}
-            type="button"
-            className="btn btn-light"
-          >
-            Add Social Network Links
-          </button>
-          <span>Optional</span>
-        </div>
-
-        {displaySocialInputs && (
-          <Fragment>
-            <div className="form-group social-input">
-              <i className="fab fa-twitter fa-2x" />
-              <input
-                type="text"
-                placeholder="Twitter URL"
-                name="twitter"
-                value={twitter}
-                onChange={onChange}
-              />
-            </div>
-
-            <div className="form-group social-input">
-              <i className="fab fa-facebook fa-2x" />
-              <input
-                type="text"
-                placeholder="Facebook URL"
-                name="facebook"
-                value={facebook}
-                onChange={onChange}
-              />
-            </div>
-
-            <div className="form-group social-input">
-              <i className="fab fa-youtube fa-2x" />
-              <input
-                type="text"
-                placeholder="YouTube URL"
-                name="youtube"
-                value={youtube}
-                onChange={onChange}
-              />
-            </div>
-
-            <div className="form-group social-input">
-              <i className="fab fa-linkedin fa-2x" />
-              <input
-                type="text"
-                placeholder="Linkedin URL"
-                name="linkedin"
-                value={linkedin}
-                onChange={onChange}
-              />
-            </div>
-
-            <div className="form-group social-input">
-              <i className="fab fa-instagram fa-2x" />
-              <input
-                type="text"
-                placeholder="Instagram URL"
-                name="instagram"
-                value={instagram}
-                onChange={onChange}
-              />
-            </div>
-          </Fragment>
-        )}
 
         <input type="submit" className="btn btn-primary my-1" />
         <Link className="btn btn-light my-1" to="/dashboard">
@@ -252,11 +203,11 @@ const ProfileForm = ({
 ProfileForm.propTypes = {
   createProfile: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  profile: state.profile
+  profile: state.profile,
 });
 
 export default connect(mapStateToProps, { createProfile, getCurrentProfile })(

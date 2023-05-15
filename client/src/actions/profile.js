@@ -1,5 +1,5 @@
-import api from '../utils/api';
-import { setAlert } from './alert';
+import api from "../utils/api";
+import { setAlert } from "./alert";
 
 import {
   GET_PROFILE,
@@ -9,57 +9,51 @@ import {
   CLEAR_PROFILE,
   ACCOUNT_DELETED,
   GET_REPOS,
-  NO_REPOS
-} from './types';
+  NO_REPOS,
+} from "./types";
 
 // Get current users profile
 export const getCurrentProfile = () => async (dispatch) => {
   try {
-    const res = await api.get('/profile/me');
-
+    const res = await api.get("/profile/me");
     dispatch({
       type: GET_PROFILE,
-      payload: res.data
+      payload: res.data,
     });
   } catch (err) {
     dispatch({
       type: PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
 };
-// export const getProfileByProfileId = (ProfileId) => async (dispatch) => {
-//   try {
-//     const res = await api.get(`/profile/:${ProfileId}`);
-
-//     dispatch({
-//       type: GET_PROFILE,
-//       payload: res.data
-//     });
-//   } catch (err) {
-//     dispatch({
-//       type: PROFILE_ERROR,
-//       payload: { msg: err.response.statusText, status: err.response.status }
-//     });
-//   }
-// };
-
-// Get all profiles
-export const getProfiles = () => async (dispatch) => {
-  dispatch({ type: CLEAR_PROFILE });
-
+export const getOrgs = () => async (dispatch) => {
   try {
-    const res = await api.get('/profile');
+    const res = await api.get("/orgs");
     dispatch({
       type: GET_PROFILES,
-      payload: res.data
+      payload: res.data,
     });
   } catch (err) {
-
     dispatch({
       type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
 
-      payload: { msg: err.response.statusText, status: err.response.status }
+// Get all profiles
+export const getEmployees = (orgID) => async (dispatch) => {
+  try {
+    const res = await api.get(`/orgs/emp/${orgID}`);
+    dispatch({
+      type: GET_REPOS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: NO_REPOS,
+      payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
 };
@@ -67,17 +61,16 @@ export const getProfiles = () => async (dispatch) => {
 // Get profile by ID
 export const getProfileById = (userId) => async (dispatch) => {
   try {
-    // console.log('user id = ',userId);
     const res = await api.get(`/profile/user/${userId}`);
 
     dispatch({
       type: GET_PROFILE,
-      payload: res.data
+      payload: res.data,
     });
   } catch (err) {
     dispatch({
       type: PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
 };
@@ -89,153 +82,159 @@ export const getGithubRepos = (username) => async (dispatch) => {
 
     dispatch({
       type: GET_REPOS,
-      payload: res.data
+      payload: res.data,
     });
   } catch (err) {
     dispatch({
       type: NO_REPOS,
-      payload:{msg: err.response.statusText, status: err.response.status}
+      payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
 };
 
 // Create or update profile
-export const createProfile = (formData, history, edit = false) => async (
-  dispatch
-) => {
+export const createProfile =
+  (formData, history, edit = false) =>
+  async (dispatch) => {
+    try {
+      const res = await api.post("/profile", formData);
+
+      dispatch({
+        type: GET_PROFILE,
+        payload: res.data,
+      });
+
+      dispatch(
+        setAlert(edit ? "Profile Updated" : "Profile Created", "success")
+      );
+
+      if (!edit) {
+        history.push("/dashboard");
+      }
+    } catch (err) {
+      const errors = err.response.data.errors;
+
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+      }
+
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status },
+      });
+    }
+  };
+
+// Add organization
+export const addOrganization = (formData, history) => async (dispatch) => {
   try {
-    const res = await api.post('/profile', formData);
+    const res = await api.post("/orgs", formData);
 
     dispatch({
-      type: GET_PROFILE,
-      payload: res.data
+      type: UPDATE_PROFILE,
+      payload: res.data,
     });
 
-    dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created', 'success'));
+    dispatch(setAlert("organization Added", "success"));
 
-    if (!edit) {
-      history.push('/dashboard');
-    }
+    // history.push("/dashboard");
   } catch (err) {
     const errors = err.response.data.errors;
 
     if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
     }
 
     dispatch({
       type: PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
 };
 
-// Add Experience
-export const addExperience = (formData, history) => async (dispatch) => {
+// Add Employee
+export const addEmployee = (formData, history) => async (dispatch) => {
   try {
-    const res = await api.put('/profile/experience', formData);
+    const res = await api.post("/orgs/emp", formData);
 
     dispatch({
       type: UPDATE_PROFILE,
-      payload: res.data
+      payload: res.data,
     });
 
-    dispatch(setAlert('Experience Added', 'success'));
+    dispatch(setAlert("Employee Added", "success"));
 
-    history.push('/dashboard');
+    history.push("/dashboard");
   } catch (err) {
     const errors = err.response.data.errors;
 
+    dispatch(setAlert("Employee already registered", "danger"));
+
     if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
     }
 
     dispatch({
       type: PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
 };
 
-// Add Education
-export const addEducation = (formData, history) => async (dispatch) => {
+// Delete organization
+export const deleteorganization = (id) => async (dispatch) => {
   try {
-    const res = await api.put('/profile/education', formData);
+    const res = await api.delete(`/orgs/${id}`);
 
     dispatch({
-      type: UPDATE_PROFILE,
-      payload: res.data
+      type: GET_PROFILES,
+      // type: GET_PROFILE,
+      payload: res.data,
     });
 
-    dispatch(setAlert('Education Added', 'success'));
-
-    history.push('/dashboard');
+    dispatch(setAlert("organization Removed", "success"));
   } catch (err) {
-    const errors = err.response.data.errors;
-
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-    }
-
     dispatch({
       type: PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
 };
 
-// Delete experience
-export const deleteExperience = (id) => async (dispatch) => {
+// Delete employee
+export const deleteEmployee = (id1, id2) => async (dispatch) => {
   try {
-    const res = await api.delete(`/profile/experience/${id}`);
+    console.log("id1,id2", id1.org, id2);
+    const res = await api.delete(`/orgs/emp/${id1.org}/${id2}`);
 
     dispatch({
-      type: UPDATE_PROFILE,
-      payload: res.data
+      type: NO_REPOS,
+      payload: res.data,
     });
 
-    dispatch(setAlert('Experience Removed', 'success'));
+    dispatch(setAlert("Employee Removed", "success"));
   } catch (err) {
     dispatch({
       type: PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
-    });
-  }
-};
-
-// Delete education
-export const deleteEducation = (id) => async (dispatch) => {
-  try {
-    const res = await api.delete(`/profile/education/${id}`);
-
-    dispatch({
-      type: UPDATE_PROFILE,
-      payload: res.data
-    });
-
-    dispatch(setAlert('Education Removed', 'success'));
-  } catch (err) {
-    dispatch({
-      type: PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
 };
 
 // Delete account & profile
 export const deleteAccount = () => async (dispatch) => {
-  if (window.confirm('Are you sure? This can NOT be undone!')) {
+  if (window.confirm("Are you sure? This can NOT be undone!")) {
     try {
-      await api.delete('/profile');
+      await api.delete("/profile");
 
       dispatch({ type: CLEAR_PROFILE });
       dispatch({ type: ACCOUNT_DELETED });
 
-      dispatch(setAlert('Your account has been permanently deleted'));
+      dispatch(setAlert("Your account has been permanently deleted"));
     } catch (err) {
       dispatch({
         type: PROFILE_ERROR,
-        payload: { msg: err.response.statusText, status: err.response.status }
+        payload: { msg: err.response.statusText, status: err.response.status },
       });
     }
   }

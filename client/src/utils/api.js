@@ -1,12 +1,12 @@
-import axios from 'axios';
-import store from '../store';
-import { LOGOUT } from '../actions/types';
+import axios from "axios";
+import store from "../store";
+import { LOGOUT } from "../actions/types";
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: "http://localhost:5000/api",
   headers: {
-    'Content-Type': 'application/json'
-  }
+    "Content-Type": "application/json",
+  },
 });
 /**
  intercept any error responses from the api
@@ -17,13 +17,15 @@ const api = axios.create({
 **/
 
 api.interceptors.response.use(
-  res => res,
-  err => {
+  (res) => res,
+  (err) => {
     if (err.response.status === 401) {
       store.dispatch({ type: LOGOUT });
     }
+    console.log("err, res in api ", err);
     return Promise.reject(err);
   }
+  // console.log("res =", res)
 );
 
 export default api;

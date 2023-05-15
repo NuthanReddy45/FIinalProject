@@ -1,8 +1,11 @@
 {
-    "mongoURI":"mongodb+srv://NuthanReddy:snReddy213@devcluster.v4jkw.mongodb.net/devdb?retryWrites=true&w=majority",
-  
-    "jwtSecret":"Token"
-    
+          
+    "mongoURI":"mongodb+srv://sainuthanreddy264:snReddy213@cluster23.5bienxz.mongodb.net/test",       
+    "CLIENT_URL": "http://localhost:3000",
+    "jwtSecret":"Token",
+    "EMAIL_HOST": "gmail",
+    "EMAIL_USER": "sainuthanreddy213@gmail.com",
+    "EMAIL_PASSWORD":"jzxohfmnbvdldjjq"
 } 
 
  

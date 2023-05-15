@@ -45,7 +45,8 @@ export const register = (formData) => async (dispatch) => {
       type: REGISTER_SUCCESS,
       payload: res,
     });
-    dispatch(loadUser());
+    dispatch(setAlert("Registration Succesfull Please Login Now", "success"));
+    // dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;
 

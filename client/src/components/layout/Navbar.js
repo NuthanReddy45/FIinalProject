@@ -8,11 +8,13 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
     <ul>
       <li>
-        <Link to="/acts">Acts</Link>
+        <Link style={{ textDecoration: "none" }} to="/acts">
+          Acts
+        </Link>
       </li>
 
       <li>
-        <Link to="/dashboard">
+        <Link style={{ textDecoration: "none" }} to="/dashboard">
           <i className="fas fa-user" />{" "}
           <span className="hide-sm">Dashboard</span>
         </Link>
@@ -29,28 +31,44 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const guestLinks = (
     <ul>
       <li>
-        <Link to="/">Home</Link>
+        <Link style={{ textDecoration: "none" }} to="/">
+          Home
+        </Link>
       </li>
       <li>
-        <Link to="/aboutUs">AboutUs</Link>
+        <Link style={{ textDecoration: "none" }} to="/aboutUs">
+          AboutUs
+        </Link>
       </li>
       <li>
-        <Link to="/FAQs">FAQs</Link>
+        <Link style={{ textDecoration: "none" }} to="/FAQs">
+          FAQs
+        </Link>
       </li>
       <li>
-        <Link to="/help">Help</Link>
+        <Link style={{ textDecoration: "none" }} to="/help">
+          Help
+        </Link>
       </li>
       <li>
-        <Link to="/careers">Careers</Link>
+        <Link style={{ textDecoration: "none" }} to="/careers">
+          Careers
+        </Link>
       </li>
       <li>
-        <Link to="/contactUs">Contact Us</Link>
+        <Link style={{ textDecoration: "none" }} to="/contactUs">
+          Contact Us
+        </Link>
       </li>
       <li>
-        <Link to="/register">Register</Link>
+        <Link style={{ textDecoration: "none" }} to="/register">
+          Register
+        </Link>
       </li>
       <li>
-        <Link to="/login">Login</Link>
+        <Link style={{ textDecoration: "none" }} to="/login">
+          Login
+        </Link>
       </li>
     </ul>
   );
@@ -58,7 +76,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   return (
     <nav className="navbar bg-dark">
       <h1>
-        <Link to="/">
+        <Link style={{ textDecoration: "none" }} to="/">
           <i className="fas fa-user" /> ELabourDelhi
         </Link>
       </h1>
@@ -90,13 +108,13 @@ export default connect(mapStateToProps, { logout })(Navbar);
 //     const authLinks = (
 //         <ul>
 //             <li>
-//                 <Link to="/profiles">Developers</Link>
+//                 <Link style={{textDecoration:"none"}} to="/profiles">Developers</Link>
 //             </li>
 //             <li>
-//                 <Link to="/posts">Posts</Link>
+//                 <Link style={{textDecoration:"none"}} to="/posts">Posts</Link>
 //             </li>
 //             <li>
-//                 <Link to="/dashboard">
+//                 <Link style={{textDecoration:"none"}} to="/dashboard">
 //                     <i className="fas fa-user" />{' '}
 //                     <span className="hide-sm">Dashboard</span>
 //                 </Link>
@@ -113,13 +131,13 @@ export default connect(mapStateToProps, { logout })(Navbar);
 //     const guestLinks = (
 //         <ul>
 //             <li>
-//                 <Link to="/profiles">Developers</Link>
+//                 <Link style={{textDecoration:"none"}} to="/profiles">Developers</Link>
 //             </li>
 //             <li>
-//                 <Link to="/register">Register</Link>
+//                 <Link style={{textDecoration:"none"}} to="/register">Register</Link>
 //             </li>
 //             <li>
-//                 <Link to="/login">Login</Link>
+//                 <Link style={{textDecoration:"none"}} to="/login">Login</Link>
 //             </li>
 //         </ul>
 //     );
@@ -128,7 +146,7 @@ export default connect(mapStateToProps, { logout })(Navbar);
 
 //         <nav className="navbar bg-dark">
 //             <h1>
-//                 <Link to="/dashboard"> <i className="fas fa-code"></i> DevConnector </Link>
+//                 <Link style={{textDecoration:"none"}} to="/dashboard"> <i className="fas fa-code"></i> DevConnector </Link>
 //             </h1>
 //             <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
 //         </nav>

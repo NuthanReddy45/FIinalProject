@@ -278,7 +278,7 @@ const emailTemplate = ({ title, subject, body, link, btn, footer }) => `
 																		style="text-align: center"
 																	>
 																		<img
-																			src=""
+																			src="https://elabour.vercel.app/labor-man.png"
 																			alt="ELabour Delhi"
 																			style="width: 80px"
 																		/>

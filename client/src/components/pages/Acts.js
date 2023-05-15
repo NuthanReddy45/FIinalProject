@@ -18,7 +18,7 @@ const Acts = ({ getCurrentProfile, profile: { profile } }) => {
     fun();
   }, [getCurrentProfile]);
 
-  const { act1, act2, act3 } = profile;
+  // const { act1, act2, act3 } = profile;
 
   const prop1 = {
     act: "factories",
@@ -43,7 +43,7 @@ const Acts = ({ getCurrentProfile, profile: { profile } }) => {
             <div className="card-actions">
               <button
                 className="card-button"
-                disabled={act1 == "" ? true : false}
+                //={act1 == "" ? true : false}
                 onClick={() => {
                   history.push("/returns", prop1);
                 }}
@@ -67,7 +67,7 @@ const Acts = ({ getCurrentProfile, profile: { profile } }) => {
             <div className="card-actions">
               <button
                 className="card-button"
-                disabled={act2 == "" ? true : false}
+                //={act2 == "" ? true : false}
                 onClick={() => {
                   history.push("/returns", prop2);
                 }}
@@ -90,7 +90,7 @@ const Acts = ({ getCurrentProfile, profile: { profile } }) => {
             <div className="card-actions">
               <button
                 className="card-button"
-                disabled={act3 == "" ? true : false}
+                //={act3 == "" ? true : false}
                 onClick={() => {
                   history.push("/returns", prop3);
                 }}

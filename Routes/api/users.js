@@ -11,6 +11,8 @@ const User = require("../../models/user");
 const {
   createEmailVerificationToken,
   createEmailVerificationUrl,
+  emailVerificationTemplate,
+  transporter,
 } = require("../../config/email");
 
 // @route    POST api/users
